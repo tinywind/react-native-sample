@@ -1,24 +1,21 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-import React from 'react';
-import { Button, Linking, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import React, { useState } from 'react';
+import { Button, Linking, StyleSheet, Text, useColorScheme, View, useWindowDimensions, ButtonProps } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 function App() {
+  const windowDimensions = useWindowDimensions();
   const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const backgroundStyle = { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter };
+  const [number, setNumber] = useState(0);
 
   return (
     <View style={{ ...styles.body, ...backgroundStyle }}>
-      <Text style={{}}>Go Programming</Text>
+      <Text style={{}}>
+        window dimensions: {Math.ceil(windowDimensions.width)} x {Math.ceil(windowDimensions.height)}
+      </Text>
+      <Text style={{}}>Clicked {number}</Text>
       <Button title='button title' onPress={() => Linking.openURL('https://youtube.com')} />
+      <Button title='inc number' onPress={() => setNumber(prevState => prevState + 1)} />
     </View>
   );
 }
