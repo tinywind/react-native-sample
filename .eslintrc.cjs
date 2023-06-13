@@ -60,6 +60,7 @@ module.exports = {
     'no-unused-vars': 0,
     '@typescript-eslint/no-unused-vars': 0,
     'react-hooks/exhaustive-deps': 0,
+    'react-native/no-inline-styles': 0,
     // eslint-plugin-react에서 제공하는 규칙
     'react/react-in-jsx-scope': 'off',
     // 'react/display-name': 'off',
