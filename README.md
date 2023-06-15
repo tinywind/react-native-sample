@@ -10,3 +10,4 @@
 - https://reactnative.dev/blog/2023/01/12/version-071
 - https://reactnative.dev/docs/components-and-apis
 - https://reactnavigation.org/
+- https://fontawesome.com/icons
