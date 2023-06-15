@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Alert, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, useColorScheme } from 'react-native';
+import { Alert, Button, Modal, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 function App() {
@@ -8,10 +8,26 @@ function App() {
   const [name, setName] = useState<string>('');
   const [submitted, setSubmitted] = useState<boolean>(false);
   const ref = useRef<TextInput>(null);
+  const [showWarning, setShowWarning] = useState<boolean>(false);
 
   return (
     <SafeAreaView style={{ ...styles.body, ...backgroundStyle }}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
+      <Modal visible={showWarning} animationType='slide' onRequestClose={() => setShowWarning(false)} transparent={true}>
+        <View style={{ backgroundColor: 'rgba(0, 255, 0, 0.5)', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ width: 300, height: 300, backgroundColor: 'wheat', padding: 10, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ width: '100%', padding: -10, alignItems: 'center', justifyContent: 'center', backgroundColor: 'yellow' }}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>WARNING</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <Text>Name must be at least 3 characters long</Text>
+            </View>
+            <View style={{ alignItems: 'center', justifyContent: 'flex-end' }}>
+              <Button title='close' onPress={() => setShowWarning(false)} />
+            </View>
+          </View>
+        </View>
+      </Modal>
       <Text style={{ color: 'black', margin: 10 }}>write your name:</Text>
       <TextInput
         ref={ref}
@@ -27,30 +43,9 @@ function App() {
           if (submitted) {
             ref.current?.clear();
             setSubmitted(false);
+            setName('');
           } else if (name.length < 3) {
-            ToastAndroid.show('Name must be at least 3 characters long', ToastAndroid.SHORT);
-            Alert.alert(
-              'Error',
-              'Name must be at least 3 characters long',
-              [
-                {
-                  text: 'Do not show again',
-                  onPress: () => console.warn('Do not show again Pressed'),
-                  style: 'destructive',
-                },
-                {
-                  text: 'Cancel',
-                  onPress: () => console.warn('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {
-                  text: 'OK',
-                  onPress: () => console.warn('OK Pressed'),
-                  style: 'default',
-                },
-              ],
-              { cancelable: true, onDismiss: () => console.warn('Dismissed') },
-            );
+            setShowWarning(true);
           } else {
             setSubmitted(true);
           }
