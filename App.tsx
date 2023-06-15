@@ -1,5 +1,21 @@
 import React, { Component, useRef, useState } from 'react';
-import { Button, Modal, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme, View, ViewProps, ViewStyle } from 'react-native';
+import {
+  Button,
+  ImageBackground,
+  ImageProps,
+  ImageStyle,
+  Modal,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+  ViewProps,
+  ViewStyle,
+} from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as Animatable from 'react-native-animatable';
@@ -12,18 +28,25 @@ function App() {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const textInput = useRef<TextInput>(null);
   const [showWarning, setShowWarning] = useState<boolean>(false);
-  const animatableRef = useRef<Component<AnimatableProperties<ViewStyle> & ViewProps, any, any> & Animatable.View>(null);
+  const animatableViewRef = useRef<Component<AnimatableProperties<ViewStyle> & ViewProps, any, any> & Animatable.View>(null);
+  const animatableImageRef = useRef<Component<AnimatableProperties<ImageStyle> & ImageProps, any, any> & Animatable.Image>(null);
 
   const summit = async () => {
     setSubmitted(true);
-    if (animatableRef.current?.bounceIn) await animatableRef.current.bounceIn(1000);
+    if (animatableViewRef.current?.bounceIn) await animatableViewRef.current.bounceIn(1000);
+  };
+
+  const showWarningModal = async () => {
+    setShowWarning(true);
+    if (animatableImageRef.current?.bounceInDown) await animatableImageRef.current.bounceInDown();
   };
 
   return (
     <SafeAreaView style={{ ...styles.body, ...backgroundStyle }}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
-      <Modal visible={showWarning} animationType='slide' onRequestClose={() => setShowWarning(false)} transparent={true}>
-        <View
+      <Modal visible={showWarning} animationType='slide' onRequestClose={() => setShowWarning(false)} transparent={false}>
+        <ImageBackground
+          source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/12/35/texture-145968_960_720.png' }}
           style={{
             backgroundColor: 'rgba(0, 255, 0, 0.5)',
             flex: 1,
@@ -51,13 +74,14 @@ function App() {
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>WARNING</Text>
             </View>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <Animatable.Image ref={animatableImageRef} source={require('./assets/error.png')} animation='bounceInDown' style={{ height: 100, width: 100, margin: 10 }} resizeMode='center' />
               <Text>Name must be at least 3 characters long</Text>
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'flex-end' }}>
               <Button title='close' onPress={() => setShowWarning(false)} />
             </View>
           </View>
-        </View>
+        </ImageBackground>
       </Modal>
       <Text style={{ color: 'black', margin: 10 }}>write your name:</Text>
       <TextInput
@@ -76,7 +100,7 @@ function App() {
             setSubmitted(false);
             setName('');
           } else if (name.length < 3) {
-            setShowWarning(true);
+            await showWarningModal();
           } else {
             await summit();
           }
@@ -85,12 +109,21 @@ function App() {
         <Text>{submitted ? 'Clear' : 'Submit'}</Text>
       </TouchableOpacity>
       {submitted && (
-        <Animatable.View ref={animatableRef} animation='bounceIn'>
-          <Text style={{ color: 'black', margin: 10 }}>
-            My name is: <AntDesign name='windows' />
-            {name}
-          </Text>
-        </Animatable.View>
+        <>
+          <Animatable.View ref={animatableViewRef} animation='bounceIn'>
+            <Text style={{ color: 'black', margin: 10 }}>
+              My name is: <AntDesign name='windows' />
+              {name}
+            </Text>
+          </Animatable.View>
+          <Animatable.Image
+            source={{ uri: 'https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/blob/RN-Tutorial-15/assets/done.png?raw=true' }}
+            animation='rotate'
+            iterationCount='infinite'
+            style={{ height: 100, width: 100, margin: 10 }}
+            resizeMode='center'
+          />
+        </>
       )}
     </SafeAreaView>
   );
