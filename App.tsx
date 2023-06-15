@@ -1,37 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, SafeAreaView, StatusBar, StyleSheet, Text, useColorScheme, View, FlatList, SectionList } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import debounce from './utils/debounce';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter };
-
-  type ItemType = { key: string; data: string[] };
-  const [items, setItems] = useState<ItemType[]>([]);
-  useEffect(() => init(), []);
-  const init = () => setItems(Array.from({ length: 5 }, (a, i) => ({ key: 'item ' + (i + 1), data: Array.from({ length: i }, (_, j) => (j + 1).toString()) })));
-  const ref = useRef<SectionList>(null);
-  let timeoutId: number | undefined;
+  const [name, setName] = useState<string>('');
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  const ref = useRef<TextInput>(null);
 
   return (
     <SafeAreaView style={{ ...styles.body, ...backgroundStyle }}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
-      <Button
-        title='add'
-        onPress={() => {
-          setItems(prev => [...prev, { key: 'new item ' + (prev.length + 1), data: Array.from({ length: prev.length }, (_, j) => (j + 1).toString()) }]);
-          timeoutId = debounce(timeoutId, () => ref.current?.scrollToLocation({ animated: true, sectionIndex: items.length, itemIndex: 0 }), 10);
-        }}
-      />
-      <SectionList
+      <Text style={{ color: 'black', margin: 10 }}>write your name:</Text>
+      <TextInput
         ref={ref}
-        horizontal={false}
-        keyExtractor={(item, index) => index.toString()}
-        sections={items}
-        renderItem={({ item }: { item: string }) => <Text style={{ color: 'black', fontSize: 20, margin: 10 }}>{item}</Text>}
-        renderSectionHeader={({ section: { key } }) => <Text style={{ color: 'black', fontSize: 20, margin: 10, backgroundColor: 'yellow' }}>{key}</Text>}
+        style={{ borderWidth: 1, borderRadius: 50, width: 200, borderColor: 'slategrey', textAlign: 'center' }}
+        placeholder='input your name'
+        onChangeText={text => setName(text)}
+        keyboardType='decimal-pad'
+        maxLength={5}
       />
+      <TouchableOpacity style={{ width: 150, height: 50, margin: 20 }} onPress={() => (submitted && ref.current?.clear(), setSubmitted(!submitted))} activeOpacity={0.2}>
+        <Text>{submitted ? 'Clear' : 'Submit'}</Text>
+      </TouchableOpacity>
+      {submitted && <Text>My name is: {name}</Text>}
     </SafeAreaView>
   );
 }
