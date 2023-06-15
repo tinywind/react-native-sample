@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme } from 'react-native';
+import { Alert, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 function App() {
@@ -21,7 +21,41 @@ function App() {
         keyboardType='decimal-pad'
         maxLength={5}
       />
-      <TouchableOpacity style={{ width: 150, height: 50, margin: 20 }} onPress={() => (submitted && ref.current?.clear(), setSubmitted(!submitted))} activeOpacity={0.2}>
+      <TouchableOpacity
+        style={{ width: 150, height: 50, margin: 20 }}
+        onPress={() => {
+          if (submitted) {
+            ref.current?.clear();
+            setSubmitted(false);
+          } else if (name.length < 3) {
+            ToastAndroid.show('Name must be at least 3 characters long', ToastAndroid.SHORT);
+            Alert.alert(
+              'Error',
+              'Name must be at least 3 characters long',
+              [
+                {
+                  text: 'Do not show again',
+                  onPress: () => console.warn('Do not show again Pressed'),
+                  style: 'destructive',
+                },
+                {
+                  text: 'Cancel',
+                  onPress: () => console.warn('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: () => console.warn('OK Pressed'),
+                  style: 'default',
+                },
+              ],
+              { cancelable: true, onDismiss: () => console.warn('Dismissed') },
+            );
+          } else {
+            setSubmitted(true);
+          }
+        }}
+        activeOpacity={0.2}>
         <Text>{submitted ? 'Clear' : 'Submit'}</Text>
       </TouchableOpacity>
       {submitted && <Text>My name is: {name}</Text>}
