@@ -20,6 +20,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as Animatable from 'react-native-animatable';
 import { AnimatableProperties } from 'react-native-animatable';
+import CustomButton from './CustomButton';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -92,7 +93,7 @@ function App() {
         keyboardType='decimal-pad'
         maxLength={5}
       />
-      <TouchableOpacity
+      <CustomButton
         style={{ width: 150, height: 50, margin: 20 }}
         onPress={async () => {
           if (submitted) {
@@ -104,10 +105,9 @@ function App() {
           } else {
             await summit();
           }
-        }}
-        activeOpacity={0.2}>
+        }}>
         <Text>{submitted ? 'Clear' : 'Submit'}</Text>
-      </TouchableOpacity>
+      </CustomButton>
       {submitted && (
         <>
           <Animatable.View ref={animatableViewRef} animation='bounceIn'>
