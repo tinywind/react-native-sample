@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, useEffect } from 'react';
-import { Linking, SafeAreaView, StatusBar, Text, useColorScheme } from 'react-native';
+import React, { PropsWithChildren, useCallback, useEffect } from 'react';
+import { Linking, SafeAreaView, StatusBar, Text, useColorScheme, View } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import CustomButton from './src/CustomButton';
@@ -7,6 +7,10 @@ import { createMaterialBottomTabNavigator, MaterialBottomTabScreenProps } from '
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView, DrawerItem, DrawerItemList, DrawerScreenProps, useDrawerProgress } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { NotoSansKR_400Regular } from '@expo-google-fonts/noto-sans-kr';
+import { NotoSerifKR_400Regular } from '@expo-google-fonts/noto-serif-kr';
 
 type NavigationParameters = {
   Main: undefined;
@@ -37,18 +41,30 @@ function Screen({ children }: PropsWithChildren<{}>) {
 }
 
 function HomeScreen({ navigation }: MaterialBottomTabScreenProps<NavigationParameters, 'Home'>) {
+  const [fontsLoaded] = useFonts({
+    NotoSansKR_400Regular,
+    NotoSerifKR_400Regular,
+    Kablammo: require('./assets/fonts/Kablammo-Regular.ttf'),
+  });
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) await SplashScreen.hideAsync();
+  }, [fontsLoaded]);
+  if (!fontsLoaded) return null;
+
   return (
     <Screen>
-      <Text style={{ fontSize: 40 }}>Home</Text>
-      <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('Detail')}>
-        <Text>Go to Detail Screen</Text>
-      </CustomButton>
-      <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'tinywind' })}>
-        <Text>Go to User(tinywind) Screen</Text>
-      </CustomButton>
-      <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'jeon' })}>
-        <Text>Go to User(jeon) Screen</Text>
-      </CustomButton>
+      <View onLayout={onLayoutRootView}>
+        <Text style={{ fontSize: 40 }}>Home (홈)</Text>
+        <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('Detail')}>
+          <Text style={{ fontFamily: 'Kablammo' }}>Go to Detail Screen</Text>
+        </CustomButton>
+        <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'tinywind' })}>
+          <Text style={{ fontFamily: 'NotoSansKR_400Regular' }}>Go to 사용자(tinywind) 스크린</Text>
+        </CustomButton>
+        <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'jeon' })}>
+          <Text style={{ fontFamily: 'NotoSerifKR_400Regular' }}>Go to 사용자(jeon) 스크린</Text>
+        </CustomButton>
+      </View>
     </Screen>
   );
 }
