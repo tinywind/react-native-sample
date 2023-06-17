@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from './src/contexts/store/store';
 import Logged from './src/screens/Logged';
+import Posts from './src/screens/Posts';
 
 export type MainStackNavigationParameters = {
   Login: undefined;
@@ -15,7 +16,7 @@ export type NavigationParameters = {
   Main: undefined;
   Article: undefined;
   Welcome: undefined;
-  Detail: undefined;
+  Posts: undefined;
   LoginHistory: undefined;
   User: { userId?: string };
 };

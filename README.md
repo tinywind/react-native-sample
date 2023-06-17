@@ -23,4 +23,5 @@ expo start --clear
 - https://react-native-async-storage.github.io/async-storage/docs/install/
 - https://reactnative.directory/
 - https://github.com/andpor/react-native-sqlite-storage
+- https://jsonplaceholder.typicode.com/
 - 

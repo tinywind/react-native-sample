@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAppDispatch, useAppSelector } from '../contexts/store/store';
 import React, { useEffect } from 'react';
 import { EventArg } from '@react-navigation/native';
-import { Alert, BackHandler, Linking, Text, View } from 'react-native';
+import { Alert, BackHandler, Linking, ScrollView, Text, View } from 'react-native';
 import { setUser } from '../contexts/store/userSlice';
 import LoginHistory from './LoginHistory';
 import { MainStackNavigationParameters, NavigationParameters } from '../../App';
@@ -12,6 +12,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColorSchemeScreen from '../components/ColorSchemeScreen';
 import { createMaterialBottomTabNavigator, MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-tabs';
 import CustomButton from '../components/CustomButton';
+import Posts from './Posts';
 
 const Drawer = createDrawerNavigator<NavigationParameters>();
 const Tabs = createMaterialBottomTabNavigator<NavigationParameters>();
@@ -25,27 +26,21 @@ function WelcomeScreen({ navigation }: MaterialBottomTabScreenProps<NavigationPa
           <Text style={{ fontSize: 25 }}>Welcome </Text>
           <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{user?.id}</Text>
         </View>
-        <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('Detail')}>
-          <Text>Go to Detail Screen</Text>
-        </CustomButton>
-        <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'tinywind' })}>
-          <Text>Go to 사용자(tinywind) 스크린</Text>
-        </CustomButton>
-        <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'jeon' })}>
-          <Text>Go to 사용자(jeon) 스크린</Text>
-        </CustomButton>
+        <ScrollView>
+          <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('Posts')}>
+            <Text>Posts with API</Text>
+          </CustomButton>
+          <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('LoginHistory')}>
+            <Text>LoginHistory with SQLite</Text>
+          </CustomButton>
+          <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'tinywind' })}>
+            <Text>Go to 사용자(tinywind) 스크린</Text>
+          </CustomButton>
+          <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'jeon' })}>
+            <Text>Go to 사용자(jeon) 스크린</Text>
+          </CustomButton>
+        </ScrollView>
       </View>
-    </ColorSchemeScreen>
-  );
-}
-
-function DetailScreen({ navigation }: MaterialBottomTabScreenProps<NavigationParameters, 'Detail'>) {
-  return (
-    <ColorSchemeScreen>
-      <Text>Detail</Text>
-      <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.goBack()}>
-        <Text>Go Back</Text>
-      </CustomButton>
     </ColorSchemeScreen>
   );
 }
@@ -83,10 +78,10 @@ function MainScreen({ route, navigation }: DrawerScreenProps<NavigationParameter
         }}
       />
       <Tabs.Screen
-        name='Detail'
-        component={DetailScreen}
+        name='Posts'
+        component={Posts}
         options={{
-          tabBarLabel: '자세히',
+          tabBarLabel: 'Posts[API]',
           tabBarIcon: ({ focused, color }) => (
             <FontAwesome5
               name='download'
