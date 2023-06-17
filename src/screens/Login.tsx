@@ -13,6 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import * as SQLite from 'expo-sqlite';
 import { DATABASE_FILE } from '../constants';
+import { useAppDispatch } from '../contexts/store/store';
+import { setUser } from '../contexts/store/userSlice';
 
 const database = SQLite.openDatabase(DATABASE_FILE);
 type LoginFormValues = { loginId: string; password: string; remember: boolean };
@@ -28,6 +30,7 @@ const loadForm = async (): Promise<LoginFormValues> => {
 };
 
 export default function Login({ navigation }: NativeStackScreenProps<MainStackNavigationParameters, 'Login'>) {
+  const dispatch = useAppDispatch();
   const { control, handleSubmit, setValue } = useForm<LoginFormValues>({
     defaultValues: {
       loginId: '',
@@ -61,13 +64,7 @@ export default function Login({ navigation }: NativeStackScreenProps<MainStackNa
     } catch (error) {
       console.error(error);
     }
-    try {
-      await AsyncStorage.setItem('userId', loginId);
-    } catch (error) {
-      console.error(error);
-      Alert.alert(`로그인에 실패했습니다: ${error}`);
-      return;
-    }
+    dispatch(setUser({ id: loginId }));
     await database.transaction(async tx => await tx.executeSql('INSERT INTO login_history (login_id) VALUES (?);', [loginId]));
 
     navigation.navigate('Logged');

@@ -17,7 +17,6 @@ export default function LoginHistory({ route, navigation }: DrawerScreenProps<Na
         'SELECT * FROM login_history',
         [],
         (_, { rows: { _array } }) => {
-          console.log(_array);
           setArray(_array.sort(e => e.id).map(({ login_id, created_at }) => ({ userId: login_id, createdAt: created_at })));
         },
         (transaction, error) => {
@@ -27,10 +26,6 @@ export default function LoginHistory({ route, navigation }: DrawerScreenProps<Na
       );
     });
   }, []);
-
-  useEffect(() => {
-    console.log(array);
-  }, [array]);
 
   return (
     <ColorSchemeScreen>
