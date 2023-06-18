@@ -3,7 +3,7 @@
     "name": "expo-app",
     "slug": "sample-expo-app",
     "version": "1.0.0",
-    "orientation": "",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "scheme": "com.saerosoft.expoapp",
     "userInterfaceStyle": "light",
