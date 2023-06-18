@@ -43,7 +43,7 @@ export default function Login({ navigation }: NativeStackScreenProps<MainStackNa
   const [fontsLoaded] = useFonts({
     NotoSansKR_400Regular,
     NotoSerifKR_400Regular,
-    Kablammo: require('../../assets/fonts/Kablammo-Regular.ttf'),
+    Kablammo: require('../../assets/fonts/Kablammo_Regular.ttf'),
   });
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) await SplashScreen.hideAsync();
