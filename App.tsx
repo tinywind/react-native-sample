@@ -10,6 +10,7 @@ import * as Notifications from 'expo-notifications';
 import { registerForPushNotificationsAsync } from './src/utils/notifications';
 import { setToken } from './src/contexts/store/tokenSlice';
 import { setNotification } from './src/contexts/store/notificationSlice';
+import { insertLog } from './src/utils/logs';
 
 export type MainStackNavigationParameters = {
   Login: undefined;
@@ -18,7 +19,7 @@ export type MainStackNavigationParameters = {
 
 export type NavigationParameters = {
   Main: undefined;
-  Article: undefined;
+  Log: undefined;
   Welcome: undefined;
   Posts: undefined;
   LoginHistory: undefined;
@@ -33,6 +34,7 @@ function SetterNotification({ children }: PropsWithChildren<{}>) {
   const responseListener = useRef<Notifications.Subscription>();
 
   useEffect(() => {
+    insertLog('before registerForPushNotificationsAsync');
     registerForPushNotificationsAsync().then(async token => {
       if (!token) return;
       dispatch(setToken(token));

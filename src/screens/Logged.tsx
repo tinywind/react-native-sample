@@ -13,6 +13,7 @@ import ColorSchemeScreen from '../components/ColorSchemeScreen';
 import { createMaterialBottomTabNavigator, MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-tabs';
 import CustomButton from '../components/CustomButton';
 import Posts from './Posts';
+import Log from './Log';
 
 const Drawer = createDrawerNavigator<NavigationParameters>();
 const Tabs = createMaterialBottomTabNavigator<NavigationParameters>();
@@ -32,6 +33,9 @@ function WelcomeScreen({ navigation }: MaterialBottomTabScreenProps<NavigationPa
           </CustomButton>
           <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('LoginHistory')}>
             <Text>LoginHistory with SQLite</Text>
+          </CustomButton>
+          <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('Log')}>
+            <Text>Log</Text>
           </CustomButton>
           <CustomButton style={{ padding: 10, margin: 10 }} onPress={() => navigation.navigate('User', { userId: 'tinywind' })}>
             <Text>Go to 사용자(tinywind) 스크린</Text>
@@ -117,14 +121,6 @@ function MainScreen({ route, navigation }: DrawerScreenProps<NavigationParameter
   );
 }
 
-function ArticleScreen({ route, navigation }: DrawerScreenProps<NavigationParameters, 'Article'>) {
-  return (
-    <ColorSchemeScreen>
-      <Text>Article</Text>
-    </ColorSchemeScreen>
-  );
-}
-
 function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { navigation } = props;
   const progress = useDrawerProgress();
@@ -200,7 +196,7 @@ export default function Logged({ route, navigation }: NativeStackScreenProps<Mai
         },
       }}>
       <Drawer.Screen name='Main' component={MainScreen} />
-      <Drawer.Screen name='Article' component={ArticleScreen} />
+      <Drawer.Screen name='Log' component={Log} />
       <Drawer.Screen name='LoginHistory' component={LoginHistory} />
     </Drawer.Navigator>
   );

@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.saerosoft.expoapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,17 +30,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [ [
-      "expo-notifications",
-      {
-        "icon": "./assets/notification_icon.png",
-        "color": "#ffffff",
-        "sounds": [
-          "./assets/notification_sound.wav",
-          "./assets/notification_sound_other.wav"
-        ]
-      }
-    ]],
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification_icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./assets/notification_sound.wav",
+            "./assets/notification_sound_other.wav"
+          ]
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "cbe32ced-c87f-4bef-89e0-64a5c1c373d3"
