@@ -2,6 +2,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import userReducer from './userSlice';
+import notificationReducer from './notificationSlice';
+import tokenReducer from './tokenSlice';
 // @ts-ignore
 import { DEVELOPMENT } from '@env';
 
@@ -9,6 +11,8 @@ const logger = createLogger();
 
 const rootReducer = combineReducers({
   user: userReducer,
+  notification: notificationReducer,
+  token: tokenReducer,
 });
 
 const initialState = {};

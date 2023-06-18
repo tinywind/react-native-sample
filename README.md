@@ -12,6 +12,8 @@ expo start --clear
 - The Complete React Native Course: from Zero to Hero: https://www.youtube.com/watch?v=usmvrBShCCU
 - Install Android Emulator for React Native Expo: https://www.youtube.com/watch?v=ZGIU5aIRi9M
 - Local SQLite Database for Expo React Native App with Import and Export Database from Device Files: https://www.youtube.com/watch?v=1kSLd9oQX7c
+- How to Add a Push Notification Feature Using React Native? Both Android and iOS | JS Tutorial: https://www.youtube.com/watch?v=X5kjfW1rfig
+- How to publish Expo React Native App to Google Play Store: https://www.youtube.com/watch?v=oBWBDaqNuws&t=483s
 - https://reactnative.dev/docs/environment-setup
 - https://reactnative.dev/blog/2023/01/12/version-071
 - https://reactnative.dev/docs/components-and-apis
@@ -24,4 +26,7 @@ expo start --clear
 - https://reactnative.directory/
 - https://github.com/andpor/react-native-sqlite-storage
 - https://jsonplaceholder.typicode.com/
-- 
+- https://docs.expo.dev/push-notifications/push-notifications-setup/
+- https://expo.dev/
+- https://docs.expo.dev/build/setup/
+-

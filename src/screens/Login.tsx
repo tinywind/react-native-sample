@@ -4,7 +4,7 @@ import { NotoSerifKR_400Regular } from '@expo-google-fonts/noto-serif-kr';
 import React, { useCallback, useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import ColorSchemeScreen from '../components/ColorSchemeScreen';
-import { Alert, Text, TextInput, View } from 'react-native';
+import { Alert, Button, Text, TextInput, View } from 'react-native';
 import { MainStackNavigationParameters } from '../../App';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import CustomButton from '../components/CustomButton';
@@ -13,8 +13,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import * as SQLite from 'expo-sqlite';
 import { DATABASE_FILE } from '../constants';
-import { useAppDispatch } from '../contexts/store/store';
+import { useAppDispatch, useAppSelector } from '../contexts/store/store';
 import { setUser } from '../contexts/store/userSlice';
+import { sendPushNotification } from '../utils/notifications';
 
 const database = SQLite.openDatabase(DATABASE_FILE);
 type LoginFormValues = { loginId: string; password: string; remember: boolean };
@@ -30,6 +31,7 @@ const loadForm = async (): Promise<LoginFormValues> => {
 };
 
 export default function Login({ navigation }: NativeStackScreenProps<MainStackNavigationParameters, 'Login'>) {
+  const expoPushToken = useAppSelector(state => state.token);
   const dispatch = useAppDispatch();
   const { control, handleSubmit, setValue } = useForm<LoginFormValues>({
     defaultValues: {
@@ -133,6 +135,7 @@ export default function Login({ navigation }: NativeStackScreenProps<MainStackNa
         <CustomButton style={{ margin: 10 }} onPress={handleSubmit(onSubmit)}>
           <Text style={{ fontFamily: 'NotoSerifKR_400Regular' }}>submit</Text>
         </CustomButton>
+        {expoPushToken && <Button title='Press to Send Notification' onPress={async () => await sendPushNotification(expoPushToken)} />}
       </View>
     </ColorSchemeScreen>
   );

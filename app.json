@@ -1,10 +1,11 @@
 {
   "expo": {
     "name": "expo-app",
-    "slug": "expo-app",
+    "slug": "sample-expo-app",
     "version": "1.0.0",
     "orientation": "",
     "icon": "./assets/icon.png",
+    "scheme": "com.saerosoft.expoapp",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,10 +22,29 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.saerosoft.expoapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [ [
+      "expo-notifications",
+      {
+        "icon": "./local/assets/notification-icon.png",
+        "color": "#ffffff",
+        "sounds": [
+          "./local/assets/notification-sound.wav",
+          "./local/assets/notification-sound-other.wav"
+        ]
+      }
+    ]],
+    "extra": {
+      "eas": {
+        "projectId": "cbe32ced-c87f-4bef-89e0-64a5c1c373d3"
+      }
+    },
+    "owner": "tinywind"
   }
 }
