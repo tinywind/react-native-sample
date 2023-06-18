@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { CurrentRenderContext } from '@react-navigation/native';
+import { FlatList, Text } from 'react-native';
 
 test('renders correctly', () => {
-  const tree = renderer.create(<CurrentRenderContext />).toJSON();
+  const tree = renderer.create(<FlatList data={['item1', 'item2', 'item3']} keyExtractor={e => e} renderItem={({ item }) => <Text>{item}</Text>} />).toJSON();
   expect(tree).toMatchSnapshot();
 });

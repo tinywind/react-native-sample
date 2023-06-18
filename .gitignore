@@ -65,3 +65,5 @@ yarn-error.log
 .expo
 yarn.lock
 package-lock.json
+
+__tests__/__snapshots__/
