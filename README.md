@@ -37,3 +37,5 @@ eas credentials > Android > development > Keystore > Download
 - https://expo.dev/notifications
 - https://github.com/google/bundletool/releases
 - https://ajh322.tistory.com/289
+- https://jestjs.io/docs/getting-started
+- 
