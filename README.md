@@ -8,6 +8,11 @@
 expo start --clear
 ```
 
+## expo에서 생성된 keystore 다운받기
+```
+eas credentials > Android > development > Keystore > Download
+```
+
 ## ref
 - The Complete React Native Course: from Zero to Hero: https://www.youtube.com/watch?v=usmvrBShCCU
 - Install Android Emulator for React Native Expo: https://www.youtube.com/watch?v=ZGIU5aIRi9M
@@ -29,4 +34,6 @@ expo start --clear
 - https://docs.expo.dev/push-notifications/push-notifications-setup/
 - https://expo.dev/
 - https://docs.expo.dev/build/setup/
--
+- https://expo.dev/notifications
+- https://github.com/google/bundletool/releases
+- https://ajh322.tistory.com/289
