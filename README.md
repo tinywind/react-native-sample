@@ -13,6 +13,21 @@ expo start --clear
 eas credentials > Android > development > Keystore > Download
 ```
 
+## eas commands
+- eas secret:list
+- eas build --platform [android|ios|all]
+- eas credentials
+- eas build:configure
+- eas init --id {app id}
+- eas secret:create --scope project --name GOOGLE_SERVICES_JSON --type file --value ./google-services.json
+- 
+
+## TO DO
+- [ ] table, phone 등 다른 화면 사이즈에 대한 대응
+- [ ] firebase 연동
+- [ ] google play store 배포
+
+
 ## ref
 - The Complete React Native Course: from Zero to Hero: https://www.youtube.com/watch?v=usmvrBShCCU
 - Install Android Emulator for React Native Expo: https://www.youtube.com/watch?v=ZGIU5aIRi9M
@@ -38,4 +53,8 @@ eas credentials > Android > development > Keystore > Download
 - https://github.com/google/bundletool/releases
 - https://ajh322.tistory.com/289
 - https://jestjs.io/docs/getting-started
-- 
+- https://appicon.co/
+- https://play.google.com/console/u/0/developers/
+- https://console.cloud.google.com/iam-admin/serviceaccounts
+- https://app.privacypolicies.com/
+- https://docs.expo.dev/build-reference/variables/#how-to-upload-a-secret-file-and-use-it-in-my-app-config

@@ -10,7 +10,6 @@ import * as Notifications from 'expo-notifications';
 import { registerForPushNotificationsAsync } from './src/utils/notifications';
 import { setToken } from './src/contexts/store/tokenSlice';
 import { setNotification } from './src/contexts/store/notificationSlice';
-import { insertLog } from './src/utils/logs';
 
 export type MainStackNavigationParameters = {
   Login: undefined;
@@ -28,30 +27,40 @@ export type NavigationParameters = {
 
 const MainStack = createNativeStackNavigator<MainStackNavigationParameters>();
 
+Notifications.setNotificationHandler({
+  handleNotification: async notification => {
+    console.log('handleNotification', notification);
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+      priority: Notifications.AndroidNotificationPriority.HIGH,
+    };
+  },
+  handleError: async (notificationId, error) => {
+    console.log('handleError', notificationId, error);
+  },
+  handleSuccess: async notificationId => {
+    console.log('handleSuccess', notificationId);
+  },
+});
+
 function SetterNotification({ children }: PropsWithChildren<{}>) {
   const dispatch = useAppDispatch();
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
   useEffect(() => {
-    insertLog('before registerForPushNotificationsAsync');
     registerForPushNotificationsAsync().then(async token => {
       if (!token) return;
       dispatch(setToken(token));
 
-      Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-          shouldShowAlert: true,
-          shouldPlaySound: true,
-          shouldSetBadge: true,
-        }),
-      });
-
-      // note: self notification
+      // note: self notification for test
       await Notifications.scheduleNotificationAsync({
         content: {
           title: "You've got mail! 📬",
-          sound: 'mySoundFile.wav',
+          sound: 'notification_sound.wav',
+          priority: Notifications.AndroidNotificationPriority.HIGH,
         },
         trigger: {
           seconds: 2,
@@ -69,6 +78,7 @@ function SetterNotification({ children }: PropsWithChildren<{}>) {
       dispatch(setNotification(response.notification));
     });
     return () => {
+      console.log('SetterNotification unmount');
       notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
       responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
     };
